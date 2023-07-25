@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Todo from './components/Todo';
 
 export default function App() {
 const [todos, setTodos] = useState([
@@ -22,22 +23,17 @@ const [todos, setTodos] = useState([
   },
 ])
   return (
-    <div className="bg-green-500">
-      <h1>Lista de tarefas</h1>
+    <div className="flex bg-[url('src/img/imglist.jpg')] bg-center bg-cover w-screen h-screen">
+      <div className='bg-slate-300 bg-opacity-30 w-1/2 h-1/2 m-auto rounded-xl p-8'>
+      <h1 className='text-4xl text-center'>Lista de tarefas</h1>
       <div className='todo-list'>
         {todos.map(todo => (
-          <div className='todo' key={todo.id}>
-            <div className='content'>
-            <p>{todo.text}</p>
-            <p>({todo.category})</p>
-            </div>
-            <div>
-              <button>Concluir</button>
-              <button>Excluir</button>
-            </div>
+          <div key={todo.id}>
+            <Todo todo={ todo }/>
           </div>
         ))}
-      </div>      
+      </div>  
+      </div>
     </div>
   )
 }
