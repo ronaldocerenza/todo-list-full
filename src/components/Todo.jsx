@@ -2,14 +2,22 @@ import React from 'react'
 
 export default function Todo({ todo }) {
   return (
-    <div className='todo' key={todo.id}>
-      <div className='content'>
-        <p>{todo.text}</p>
-        <p>({todo.category})</p>
+    <div className='flex justify-between' key={todo.id}>
+      <div className='w-3/5 flex justify-between items-center text-lg'>
+        <span>{todo.text}</span>
+        <span>{todo.category}</span>
       </div>
-      <div>
-        <button>Concluir</button>
-        <button>Excluir</button>
+      <div className='flex m-1'>
+        <button className='flex justify-center items-center bg-sky-500 hover:bg-sky-700 rounded-md mx-1 p-1 text-xs text-white'>
+          <span className="material-symbols-outlined">
+            check_circle
+          </span>
+        </button>
+        <button alt='Concluir' className='flex justify-center items-center bg-sky-500 hover:bg-sky-700 rounded-md mx-1 p-1 text-xs text-white'>
+          <span className="material-symbols-outlined">
+            delete
+          </span>
+        </button>
       </div>
     </div>
   )

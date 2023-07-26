@@ -23,18 +23,31 @@ const [todos, setTodos] = useState([
     isCompleted: false
   },
 ])
+
+const addTodo = (text, category) => {
+  const newTodos = [
+    ...todos,
+    { id: todos.length + 1, text, category }];
+  setTodos(newTodos);
+}
+
   return (
-    <div className="flex bg-[url('src/img/imglist.jpg')] bg-center bg-cover w-screen h-screen">
-      <div className='bg-slate-300 bg-opacity-30 w-1/2 h-1/2 m-auto rounded-xl p-8'>
-      <h1 className='text-4xl text-center'>Lista de tarefas</h1>
-      <div className='todo-list'>
+    <div className="flex bg-[url('src/img/imglist.jpg')] bg-center bg-cover w-screen h-screen justify-center items-center">
+      <div className='bg-slate-300 bg-opacity-30 w-4/5 h-auto rounded-xl shadow-lg p-4'>
+      <h1 className='text-4xl rounded-md text-center p-2'>
+        Lista de{' '}
+        <span className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-sky-500 relative inline-block'>
+        <span className='relative text-white'>
+        Tarefas
+        </span>
+        </span>
+      </h1>
+      <div className='mb-6'>
         {todos.map(todo => (
-          <div key={todo.id}>
-            <Todo todo={ todo }/>
-          </div>
+          <Todo key={todo.id} todo={ todo }/>
         ))}
       </div>
-          <TodoForm />
+          <TodoForm addTodo={ addTodo } />
       </div>
     </div>
   )
