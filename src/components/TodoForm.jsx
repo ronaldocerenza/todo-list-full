@@ -16,14 +16,14 @@ export default function TodoForm({ addTodo }) {
 
   return (
     <div className="flex flex-col">
-      <p className="text-lg text-center p-2">
+      <h2 className="text-xs text-center p-2">
         Criar{' '}
         <span className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-sky-500 relative inline-block'>
           <span className='relative text-white'>
             Tarefa
           </span>
         </span>
-      </p>
+      </h2>
       <form onSubmit={ handleSubmit } className="flex flex-col">
         <label htmlFor="">
           <input
