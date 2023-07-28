@@ -1,45 +1,71 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Todo from './components/Todo';
 import TodoForm from './components/TodoForm';
 import Search from './components/Search';
 import Filter from './components/Filter';
+import { toast, ToastContainer } from 'react-toastify';
+import axios from 'axios';
 
 export default function App() {
-const [todos, setTodos] = useState([
-  {
-    id: 1,
-    text: 'Fazer café',
-    category: 'Pessoal',
-    isCompleted: false
-  },
-  {
-    id: 2,
-    text: 'Estudar React',
-    category: 'Estudos',
-    isCompleted: false
-  },
-  {
-    id: 3,
-    text: 'Criar um todo list',
-    category: 'Trabalho',
-    isCompleted: false
-  },
-])
+const [todos, setTodos] = useState([])
 const [search, setSearch] = useState('');
 const [filter, setFilter] = useState('All');
 const [sort, setSort] = useState('Asc');
 
-const addTodo = (text, category) => {
-  const newTodos = [
-    ...todos,
-    { id: todos.length + 1, text, category }];
-  setTodos(newTodos);
+const getTodo = async () => {
+  try {
+    const res = await axios.get('http://localhost:3001/todo');
+    setTodos(res.data);
+  } catch (error) {
+    toast.error(error);
+  }
 }
 
-const removeTodo = id => {
-  const newTodos = todos.filter(todo => todo.id !== id);
-  setTodos(newTodos);
+useEffect(() => {
+  getTodo();
+}, [setTodos]);
+
+const addTodo = (text, category) => {
+  const newTodo = {
+    text,
+    category,
+  };
+  setTodos([...todos, newTodo]);
+  toast.success('Tarefa adicionada com sucesso!');
+
+  axios.post('http://localhost:3001/todo', newTodo)
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
 }
+
+const removeTodo = async id => {
+  try {
+    await axios.delete(`http://localhost:3001/todo/${id}`);
+    const newTodos = todos.filter(todo => todo.id !== id);
+    setTodos(newTodos);
+    toast.success('Tarefa removida com sucesso!');
+  } catch (error) {
+    toast.error(error);
+  }
+}
+
+const editTodo = async (id, upTodo) => {
+  try {
+    await axios.put(`http://localhost:3001/todo/${id}`, upTodo);
+    const newTodos = todos.map(todo => {
+      if (todo.id === id) {
+        todo.text = upTodo.text;
+        todo.category = upTodo.category;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+    toast.success('Tarefa editada com sucesso!');
+  } catch (error) {
+    toast.error(error);
+  }
+}
+
 
 const completeTodo = id => {
   const newTodos = todos.map(todo => {
@@ -80,11 +106,12 @@ const completeTodo = id => {
           : b.text.localeCompare(a.text)
           )
         .map(todo => (
-          <Todo key={todo.id} todo={ todo } removeTodo={ removeTodo } completeTodo={ completeTodo }/>
+          <Todo key={todo.id} todo={ todo } removeTodo={ removeTodo } completeTodo={ completeTodo } editTodo={ editTodo }/>
         ))}
       </div>
           <TodoForm addTodo={ addTodo } />
       </div>
+      <ToastContainer autoClose={3000} position={toast.POSITION.BOTTOM_LEFT}/>
     </div>
   )
 }

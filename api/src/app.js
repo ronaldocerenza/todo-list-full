@@ -2,10 +2,12 @@
 const express = require('express');
 // const { readTodo, writeTodo, updateTodo, deleteTodo } = require('./utils/fsUtils');
 const { getAll, insertTodo, updateTodo, deleteTodo } = require('./db/todoDb');
+const cors = require('cors');
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/todo', async (_req, res) => {
   const todo = await getAll();
