@@ -20,4 +20,4 @@ Um projeto de Todo List desenvolvido utilizando React, Vite e um banco de dados 
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/todo-list-react-vite-mysql.git
+git clone git@github.com:ronaldocerenza/todo-list-full.git
