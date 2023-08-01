@@ -1,4 +1,5 @@
 import PropTypes from "prop-types"
+
 export default function Todo({ todo, removeTodo, completeTodo, editTodo }) {
   return (
     <div
@@ -42,6 +43,7 @@ export default function Todo({ todo, removeTodo, completeTodo, editTodo }) {
 
 Todo.propTypes = {
   completeTodo: PropTypes.func,
+  editTodo: PropTypes.func,
   removeTodo: PropTypes.func,
   todo: PropTypes.shape({
     category: PropTypes.any,

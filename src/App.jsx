@@ -4,6 +4,7 @@ import TodoForm from './components/TodoForm';
 import Search from './components/Search';
 import Filter from './components/Filter';
 import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 export default function App() {
@@ -68,13 +69,18 @@ const editTodo = async (id, upTodo) => {
 
 
 const completeTodo = id => {
-  const newTodos = todos.map(todo => {
-    if (todo.id === id) {
-      todo.isCompleted = !todo.isCompleted;
-    }
-    return todo;
-  });
-  setTodos(newTodos);
+  try {
+    const newTodos = todos.map(todo => {
+      if (todo.id === id) {
+        todo.isCompleted = !todo.isCompleted;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+    toast.success('Tarefa Concluida')
+  } catch (error) {
+    toast.error(error);
+  }
 }
 
   return (
@@ -109,9 +115,9 @@ const completeTodo = id => {
           <Todo key={todo.id} todo={ todo } removeTodo={ removeTodo } completeTodo={ completeTodo } editTodo={ editTodo }/>
         ))}
       </div>
-          <TodoForm addTodo={ addTodo } />
+          <TodoForm addTodo={ addTodo } editTodo={editTodo}/>
       </div>
-      <ToastContainer autoClose={3000} position={toast.POSITION.BOTTOM_LEFT}/>
+      <ToastContainer autoClose={2000} position={toast.POSITION.BOTTOM_LEFT}/>
     </div>
   )
 }

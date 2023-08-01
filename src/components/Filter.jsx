@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 export default function Filter({ filter, setFilter, setSort }) {
   return (
     <div className="flex justify-between">
@@ -48,4 +49,10 @@ export default function Filter({ filter, setFilter, setSort }) {
       </div>
     </div>
   )
+}
+
+Filter.propTypes = {
+  filter: PropTypes.any,
+  setFilter: PropTypes.func,
+  setSort: PropTypes.func
 }

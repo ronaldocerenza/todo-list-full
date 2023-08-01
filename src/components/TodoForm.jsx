@@ -1,19 +1,38 @@
 import PropTypes from "prop-types"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { toast } from "react-toastify";
+import axios from 'axios';
 
-export default function TodoForm({ addTodo }) {
+export default function TodoForm({ addTodo, editTodo }) {
   const [value, setValue] = useState('');
   const [category, setCategory] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!value || !category) return;
+    if (!value || !category) return toast.error('Preencha todos os campos!');
     addTodo (value, category);
 
+    if (editTodo) {
+      await axios.put(`http://localhost:3001/todo/${editTodo.id}`, { text: value, category })
+      .then(res => toast.success(res))
+      .catch(err => toast.error(err));
+    } else {
+      await axios.post('http://localhost:3001/todo', { text: value, category })
+      .then(res => toast.success(res))
+      .catch(err => toast.error(err));
+    }
+    
     setValue('');
     setCategory('');
   }
+
+  useEffect(() => {
+    if (editTodo) {
+      setValue(editTodo.text);
+      setCategory(editTodo.category);
+    }
+  }, [editTodo]);
 
   return (
     <div className="flex flex-col">
@@ -54,6 +73,7 @@ export default function TodoForm({ addTodo }) {
 }
 
 TodoForm.propTypes = {
-  addTodo: PropTypes.func
+  addTodo: PropTypes.func,
+  editTodo: PropTypes.any
 }
 
