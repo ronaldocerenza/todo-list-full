@@ -1,1 +1,20 @@
-[{"id":3,"text":"Criar um todo list","category":"Trabalho","isCompleted":false},{"id":4,"text":"Fazer café","category":"Pessoal","isCompleted":false},{"id":5,"text":"Fazer café","category":"Pessoal","isCompleted":false},{"id":6,"text":"Fazer café","category":"Pessoal","isCompleted":false},{"id":7,"text":"Fazer café","category":"Pessoal","isCompleted":false}]
+[
+  {
+    "id": 1,
+    "text": "Fazer café",
+    "category": "Pessoal",
+    "isCompleted": false
+  },
+  {
+    "id": 2,
+    "text": "Estudar React",
+    "category": "Estudos",
+    "isCompleted": false
+  },
+  {
+    "id": 3,
+    "text": "Criar um todo list",
+    "category": "Trabalho",
+    "isCompleted": false
+  }
+]

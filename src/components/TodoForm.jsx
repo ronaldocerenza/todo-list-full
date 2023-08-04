@@ -1,9 +1,8 @@
 import PropTypes from "prop-types"
 import { useEffect, useState } from 'react';
 import { toast } from "react-toastify";
-import axios from 'axios';
 
-export default function TodoForm({ addTodo, editTodo }) {
+export default function TodoForm({ addTodo, editTodo, edit, setEdit, setFormOpen, todos }) {
   const [value, setValue] = useState('');
   const [category, setCategory] = useState('');
 
@@ -11,33 +10,34 @@ export default function TodoForm({ addTodo, editTodo }) {
     e.preventDefault();
     
     if (!value || !category) return toast.error('Preencha todos os campos!');
-    addTodo (value, category);
-
-    if (editTodo) {
-      await axios.put(`http://localhost:3001/todo/${editTodo.id}`, { text: value, category })
-      .then(res => toast.success(res))
-      .catch(err => toast.error(err));
+    
+    if (edit !== undefined) {
+      editTodo (edit, { text: value, category });
     } else {
-      await axios.post('http://localhost:3001/todo', { text: value, category })
-      .then(res => toast.success(res))
-      .catch(err => toast.error(err));
+      addTodo (value, category);
     }
     
     setValue('');
     setCategory('');
+    setEdit();
+    setFormOpen(false);
   }
 
   useEffect(() => {
-    if (editTodo) {
-      setValue(editTodo.text);
-      setCategory(editTodo.category);
+    console.log(edit);
+    const todosId = todos
+    const upTodo = todosId.find(todo => todo.id === edit);
+    
+    if (edit !== undefined) {
+      setValue(upTodo.text);
+      setCategory(upTodo.category);
     }
-  }, [editTodo]);
+  }, []);
 
   return (
     <div className="flex flex-col">
       <h2 className="text-xs text-center p-2">
-        Criar{' '}
+        { edit !== undefined ? 'Editar ' : 'Criar '}
         <span className='before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-sky-500 relative inline-block'>
           <span className='relative text-white'>
             Tarefa
@@ -65,7 +65,7 @@ export default function TodoForm({ addTodo, editTodo }) {
             <option value="Estudos">Estudos</option>
             <option value="Trabalho">Trabalho</option>
           </select>
-          <button className='bg-sky-500 hover:bg-sky-700 rounded-md text-white w-1/6' type='submit'>Criar Tarefa</button>
+          <button className='bg-sky-500 hover:bg-sky-700 rounded-md text-white w-1/6' type='submit'>{ edit !== undefined ? 'Editar ' : 'Criar '}Tarefa</button>
         </div>
       </form>
     </div>
@@ -74,6 +74,20 @@ export default function TodoForm({ addTodo, editTodo }) {
 
 TodoForm.propTypes = {
   addTodo: PropTypes.func,
-  editTodo: PropTypes.any
+  edit: PropTypes.shape({
+    category: PropTypes.any,
+    id: PropTypes.any,
+    text: PropTypes.any
+  }),
+  editTodo: PropTypes.shape({
+    category: PropTypes.any,
+    id: PropTypes.any,
+    text: PropTypes.any
+  }),
+  setEdit: PropTypes.func,
+  setFormOpen: PropTypes.func,
+  todos: PropTypes.shape({
+    find: PropTypes.func
+  })
 }
 

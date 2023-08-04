@@ -1,11 +1,17 @@
 import PropTypes from "prop-types"
 
-export default function Todo({ todo, removeTodo, completeTodo, editTodo }) {
+export default function Todo({ todo, removeTodo, completeTodo, setEdit, setFormOpen, edit }) {
+  
+  const handleEdit = () => {
+    setEdit(todo.id)
+    setFormOpen(true)
+  }
+
   return (
     <div
     className='flex justify-between'
     key={todo.id}>
-      <div className={`w-3/5 flex justify-between items-center text-lg ${todo.isCompleted ? 'line-through text-green-500' : ''}`}>
+      <div className={`w-3/5 flex justify-between items-center text-lg tex ${todo.isCompleted ? 'line-through text-green-500' : ''} ${edit === todo.id ? 'line-through text-red-500' : ''}`}>
         <span>{todo.text}</span>
         <span>{todo.category}</span>
       </div>
@@ -30,7 +36,7 @@ export default function Todo({ todo, removeTodo, completeTodo, editTodo }) {
         <button
           alt='Editar'
           className='flex justify-center items-center bg-sky-500 hover:bg-sky-700 rounded-md mx-1 p-1 text-xs text-white'
-          onClick={() => editTodo(todo.id)}
+          onClick={handleEdit}
         >
           <span className="material-symbols-outlined">
             edit
@@ -43,8 +49,11 @@ export default function Todo({ todo, removeTodo, completeTodo, editTodo }) {
 
 Todo.propTypes = {
   completeTodo: PropTypes.func,
+  edit: PropTypes.any,
   editTodo: PropTypes.func,
   removeTodo: PropTypes.func,
+  setEdit: PropTypes.func,
+  setFormOpen: PropTypes.func,
   todo: PropTypes.shape({
     category: PropTypes.any,
     id: PropTypes.any,

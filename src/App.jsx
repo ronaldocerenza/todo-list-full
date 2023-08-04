@@ -12,6 +12,8 @@ const [todos, setTodos] = useState([])
 const [search, setSearch] = useState('');
 const [filter, setFilter] = useState('All');
 const [sort, setSort] = useState('Asc');
+const [edit, setEdit] = useState();
+const [formOpen, setFormOpen] = useState(false);
 
 const getTodo = async () => {
   try {
@@ -22,21 +24,27 @@ const getTodo = async () => {
   }
 }
 
+
+
 useEffect(() => {
   getTodo();
+
 }, [setTodos]);
 
-const addTodo = (text, category) => {
+const addTodo = async (text, category) => {
   const newTodo = {
     text,
     category,
   };
-  setTodos([...todos, newTodo]);
-  toast.success('Tarefa adicionada com sucesso!');
-
-  axios.post('http://localhost:3001/todo', newTodo)
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+  
+  try {  
+    await axios.post('http://localhost:3001/todo', newTodo);
+    setTodos([...todos, newTodo]);
+    toast.success('Tarefa adicionada com sucesso!');
+  } catch (error) {
+    toast.error(error);
+  }
+  window.location.reload();
 }
 
 const removeTodo = async id => {
@@ -52,7 +60,7 @@ const removeTodo = async id => {
 
 const editTodo = async (id, upTodo) => {
   try {
-    await axios.put(`http://localhost:3001/todo/${id}`, upTodo);
+    await axios.put(`http://localhost:3001/todo/${+id}`, upTodo);
     const newTodos = todos.map(todo => {
       if (todo.id === id) {
         todo.text = upTodo.text;
@@ -77,10 +85,15 @@ const completeTodo = id => {
       return todo;
     });
     setTodos(newTodos);
-    toast.success('Tarefa Concluida')
+    toast.info('Tarefa Alterada')
   } catch (error) {
     toast.error(error);
   }
+}
+
+const handleFormOpen = () => {
+  setFormOpen(!formOpen);
+  setEdit();
 }
 
   return (
@@ -96,7 +109,7 @@ const completeTodo = id => {
       </h1>
       <Search search={ search } setSearch={ setSearch }/>
       <Filter filter={ filter } setFilter={ setFilter} setSort={ setSort }/>
-      <div className='mb-6'>
+      <div className='mb-6 h-60 overflow-y-auto'>
         {todos
         .filter((todo) => 
           filter === 'All'
@@ -112,10 +125,16 @@ const completeTodo = id => {
           : b.text.localeCompare(a.text)
           )
         .map(todo => (
-          <Todo key={todo.id} todo={ todo } removeTodo={ removeTodo } completeTodo={ completeTodo } editTodo={ editTodo }/>
+          <Todo key={todo.id} edit={edit} setEdit={setEdit} todo={ todo } removeTodo={ removeTodo } completeTodo={ completeTodo } setFormOpen={setFormOpen}/>
         ))}
       </div>
-          <TodoForm addTodo={ addTodo } editTodo={editTodo}/>
+      {formOpen && <TodoForm edit={edit} setEdit={setEdit} todos={ todos } addTodo={ addTodo } editTodo={editTodo} setFormOpen={setFormOpen}/>}
+        <button
+          className='bg-sky-500 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded'
+          onClick={handleFormOpen}
+        >
+          {formOpen ? 'Fechar' : 'Adicionar Terefa'}
+        </button>
       </div>
       <ToastContainer autoClose={2000} position={toast.POSITION.BOTTOM_LEFT}/>
     </div>
