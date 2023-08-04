@@ -65,7 +65,7 @@ export default function TodoForm({ addTodo, editTodo, edit, setEdit, setFormOpen
             <option value="Estudos">Estudos</option>
             <option value="Trabalho">Trabalho</option>
           </select>
-          <button className='bg-sky-500 hover:bg-sky-700 rounded-md text-white w-1/6' type='submit'>{ edit !== undefined ? 'Editar ' : 'Criar '}Tarefa</button>
+          <button className='bg-sky-500 hover:bg-sky-700 text-sm sm:text-lg rounded-md text-white w-1/6' type='submit'>{ edit !== undefined ? 'Editar ' : 'Criar '}</button>
         </div>
       </form>
     </div>

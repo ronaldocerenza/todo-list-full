@@ -9,11 +9,11 @@ export default function Todo({ todo, removeTodo, completeTodo, setEdit, setFormO
 
   return (
     <div
-    className='flex justify-between'
+    className='position-absolute flex justify-between'
     key={todo.id}>
-      <div className={`w-3/5 flex justify-between items-center text-lg tex ${todo.isCompleted ? 'line-through text-green-500' : ''} ${edit === todo.id ? 'line-through text-red-500' : ''}`}>
-        <span>{todo.text}</span>
-        <span>{todo.category}</span>
+      <div className={`w-2/4 flex justify-around items-center text-lg tex ${todo.isCompleted ? 'line-through text-green-500' : ''} ${edit === todo.id ? 'line-through text-red-500' : ''}`}>
+        <p className="w-1/2 text-sm sm:text-lg truncate ...">{todo.text}</p>
+        <p className="text-sm sm:text-lg">{todo.category}</p>
       </div>
       <div className='flex m-1'>
         <button
