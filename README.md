@@ -2,6 +2,13 @@
 
 Um projeto de Todo List desenvolvido utilizando React, Vite e um banco de dados em MySQL para armazenar as tarefas, banco de dados com **docker-compose** implementado.
 
+![Tamanho tela grande](./src/img/todolist.png)
+
+<p align="center">
+  <img src="./src/img/todolistcell.png" alt="Tamanho tela grande" width="300">
+</p>
+
+
 ## Funcionalidades
 
 ###### Utilizado C.R.U.D
