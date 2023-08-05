@@ -39,17 +39,6 @@ Um projeto de Todo List desenvolvido utilizando React, Vite e um banco de dados 
 
 ## Instalação
 
-###### Client: TODO-LIST-FULL
-cd todo-list-full
-```
-# em outro terminal, rode a aplicação com vite
-# confirme se o banco de dados está rodando porta 33060 e node porta 3001
-# Aplicação do vite irá funcionar na porta local, apos linha de comando *npm run dev*
-
-npm install
-npm run dev
-```
-
 ###### Server: TODO-LIST-FULL/API
 cd todo-list-full/api
 
@@ -63,10 +52,19 @@ docker exec -it todolist_api bash
 npm start
 # ou para iniciar com live-reload
 npm run dev
-
-# se tiver algum problema com o container api-node
-
 ```
+
+###### Client: TODO-LIST-FULL
+cd todo-list-full
+```
+# em outro terminal, rode a aplicação com vite
+# confirme se o banco de dados está rodando porta 33060 e node porta 3001
+# Aplicação do vite irá funcionar na porta local, apos linha de comando *npm run dev*
+
+npm install
+npm run dev
+```
+
 # 1. Clone o repositório:
 
 ```

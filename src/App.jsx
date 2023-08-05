@@ -24,8 +24,6 @@ const getTodo = async () => {
   }
 }
 
-
-
 useEffect(() => {
   getTodo();
 

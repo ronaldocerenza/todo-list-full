@@ -8,6 +8,6 @@ CREATE TABLE todolist (
 );
 
 INSERT INTO todolist (text, category, isCompleted) VALUES
-  ('Fazer café', 'Pessoal', FALSE),
+  ('Lavar o carro', 'Pessoal', FALSE),
   ('Estudar React', 'Estudos', FALSE),
   ('Criar um todo list', 'Trabalho', FALSE);
