@@ -31,18 +31,22 @@ Um projeto de Todo List desenvolvido utilizando React, Vite e um banco de dados 
 
 ## Bibliotecas usadas
 
-###### FRONT-END
+### FRONT-END
 - Axios
 - React-icons
 - React-toastify
 - Tailwind
 - Vite
 
-###### BACK-END
+### BACK-END
 - Express
 - Mysql
 - Nodemon
 - Cors
+###### BACK-END - TESTES
+- Mocha
+- Chai
+- Sinon
 
 ## Instalação
 
@@ -77,3 +81,4 @@ npm run dev
 ```
 git clone git@github.com:ronaldocerenza/todo-list-full.git
 ```
+
